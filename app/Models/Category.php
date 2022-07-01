@@ -13,4 +13,19 @@ class Category extends Model
     {
         return $this->belongsToMany(Post::class);
     }
+
+    public function parent()
+    {
+        return $this->belongsTo('Category', 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany('Category', 'parent_id');
+    }
+
+    public function childrenRecursive()
+    {
+        return $this->children()->with('childrenRecursive');
+    }
 }
