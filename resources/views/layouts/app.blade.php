@@ -33,7 +33,17 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        @if (Route::is('panel.*'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">{{ __('Kullanıcılar') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('panel.posts.index') }}">{{ __('Yazılar') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('panel.categories.index') }}">{{ __('Kategoriler') }}</a>
+                            </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -58,6 +68,15 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    @if (Route::is('panel.index'))
+                                        <a class="dropdown-item" href="{{ route('index') }}">
+                                            {{ __('Siteyi görüntüle') }}
+                                        </a>
+                                    @else
+                                        <a class="dropdown-item" href="{{ route('panel.index') }}">
+                                            {{ __('Panel') }}
+                                        </a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

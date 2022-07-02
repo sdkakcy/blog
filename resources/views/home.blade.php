@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-8">
             @forelse ($posts as $post)
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">{{ $post->subject }}</h5>
                     <p class="card-text">{{ $post->summary }}</p>

@@ -9,6 +9,16 @@ class Category extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'created_at' => 'datetime:d.m.Y H:i:s',
+        'updated_at' => 'datetime:d.m.Y H:i:s',
+    ];
+
     public function posts()
     {
         return $this->belongsToMany(Post::class);
@@ -16,12 +26,12 @@ class Category extends Model
 
     public function parent()
     {
-        return $this->belongsTo('Category', 'parent_id');
+        return $this->belongsTo(self::class, 'parent_id');
     }
 
     public function children()
     {
-        return $this->hasMany('Category', 'parent_id');
+        return $this->hasMany(self::class, 'parent_id');
     }
 
     public function childrenRecursive()

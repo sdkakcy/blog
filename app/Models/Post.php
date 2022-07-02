@@ -17,6 +17,11 @@ class Post extends Model
      */
     protected $appends = ['summary'];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class);

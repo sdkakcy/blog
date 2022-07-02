@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Panel\CategoryController;
+use App\Http\Controllers\Panel\HomeController as PanelHomeController;
+use App\Http\Controllers\Panel\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +18,11 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes();
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('index');
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'panel', 'as' => 'panel.'], function() {
+    Route::get('/', [PanelHomeController::class, 'index'])->name('index');
+
+    Route::resource('posts', PostController::class);
+    Route::resource('categories', CategoryController::class);
+});
