@@ -14,10 +14,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $casts = [
-        'created_at' => 'datetime:d.m.Y H:i:s',
-        'updated_at' => 'datetime:d.m.Y H:i:s',
-    ];
+    protected $casts = [];
 
     public function posts()
     {
@@ -29,13 +26,17 @@ class Category extends Model
         return $this->belongsTo(self::class, 'parent_id');
     }
 
-    public function children()
+    public function childrens()
     {
         return $this->hasMany(self::class, 'parent_id');
     }
 
     public function childrenRecursive()
     {
-        return $this->children()->with('childrenRecursive');
+        return $this->childrens()->with('childrenRecursive');
+    }
+
+    public static function getTree() {
+        return self::with('childrenRecursive')->whereNull('parent_id')->get();
     }
 }
