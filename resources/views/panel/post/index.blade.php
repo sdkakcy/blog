@@ -20,7 +20,7 @@
                             <th>{{ __('Başlık') }}</th>
                             <th>{{ __('Oluşturan') }}</th>
                             <th>{{ __('Oluşturma') }}</th>
-                            <th>{{ __('Düzenleme') }}</th>
+                            <th>{{ __('Güncelleme') }}</th>
                             <th>{{ __('İşlemler') }}</th>
                         </tr>
                     </thead>

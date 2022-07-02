@@ -22,7 +22,7 @@
                             <th>{{ __('ID') }}</th>
                             <th>{{ __('Adı') }}</th>
                             <th>{{ __('Oluşturma') }}</th>
-                            <th>{{ __('Düzenleme') }}</th>
+                            <th>{{ __('Güncelleme') }}</th>
                             <th>{{ __('İşlemler') }}</th>
                         </tr>
                     </thead>

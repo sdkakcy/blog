@@ -108,4 +108,18 @@ return [
 
     'password_timeout' => 10800,
 
+    'permissions' => [
+        'view user',
+        'create user',
+        'update user',
+        'delete user',
+        'view category',
+        'create category',
+        'update category',
+        'delete category',
+        'view post',
+        'create post',
+        'update post',
+        'delete post',
+    ],
 ];

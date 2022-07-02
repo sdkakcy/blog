@@ -34,15 +34,21 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         @if (Route::is('panel.*'))
+                            @can('view user')
                             <li class="nav-item">
-                                <a class="nav-link" href="#">{{ __('Kullanıcılar') }}</a>
+                                <a class="nav-link" href="{{ route('panel.users.index') }}">{{ __('Kullanıcılar') }}</a>
                             </li>
+                            @endcan
+                            @can('view post')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('panel.posts.index') }}">{{ __('Yazılar') }}</a>
                             </li>
+                            @endcan
+                            @can('view category')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('panel.categories.index') }}">{{ __('Kategoriler') }}</a>
                             </li>
+                            @endcan
                         @endif
                     </ul>
 
