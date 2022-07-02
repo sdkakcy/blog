@@ -33,7 +33,7 @@
                                 <td>{{ $post->created_at }}</td>
                                 <td>{{ $post->updated_at }}</td>
                                 <td class="text-end">
-                                    <button type="button" class="btn btn-sm btn-primary">Düzenle</button>
+                                    <a href="{{ route('panel.posts.edit', ['post' => $post->id]) }}" type="button" class="btn btn-sm btn-primary">Düzenle</a>
                                     <button type="button" class="btn btn-sm btn-danger">Sil</button>
                                 </td>
                             </tr>

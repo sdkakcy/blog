@@ -11,15 +11,18 @@ class CategorySelectOption extends Component
 
     public $level;
 
+    public $post;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($category, $level)
+    public function __construct($category, $level, $post = null)
     {
         $this->category = $category;
         $this->level = $level;
+        $this->post = $post;
     }
 
     /**

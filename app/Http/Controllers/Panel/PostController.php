@@ -90,24 +90,57 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $categories = Category::getTree();
+
+        $post->loadMissing('categories');
+
+        return view('panel.post.edit', compact('post', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'subject' => 'required|string',
+            'category' => 'required|array|min:1',
+            'content' => 'nullable|string',
+        ]);
+
+
+        try {
+            $post->subject = $request->subject;
+            $post->slug = Str::slug($request->subject);
+            $post->content = $request->content;
+
+            $post->update();
+
+            $post->categories()->sync($request->category);
+
+            return redirect()->back()->with([
+                'status' => [
+                    'success' => true,
+                    'message' => __('Yazı güncellendi')
+                ]
+            ]);
+        } catch (\Exception $e) {
+            $result = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
+
+            return redirect()->back()->with(['status' => $result])->withInput();
+        }
     }
 
     /**
