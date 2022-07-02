@@ -4,8 +4,16 @@
     <td>{{ $category->created_at }}</td>
     <td>{{ $category->updated_at }}</td>
     <td class="text-end">
-        <a href="{{ route('panel.categories.edit', ['category' => $category->id]) }}" type="button" class="btn btn-sm btn-primary">Düzenle</a>
-        <button type="button" class="btn btn-sm btn-danger">Sil</button>
+        @can('update category')
+            <a href="{{ route('panel.categories.edit', ['category' => $category->id]) }}" type="button" class="btn btn-sm btn-primary">{{ __('Düzenle') }}</a>
+        @endcan
+        @can('delete category')
+            <form class="d-inline-flex" action="{{ route('panel.categories.destroy', $category->id)}}" method="post">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-sm btn-danger" type="submit">{{ __('Sil') }}</button>
+            </form>
+        @endcan
     </td>
 </tr>
 
@@ -13,6 +21,6 @@
     $level++;
 @endphp
 
-@foreach($category->childrenRecursive as $child)
+@foreach($category->children as $child)
     <x-category-table-row :category="$child" :level="$level" />
 @endforeach

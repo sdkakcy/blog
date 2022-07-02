@@ -10,6 +10,6 @@
 @endphp
 
 
-@foreach ($category->childrenRecursive as $child)
+@foreach ($category->children as $child)
     <x-category-select-option :category="$child" :level="$level" :categoryModel="$categoryModel" />
 @endforeach

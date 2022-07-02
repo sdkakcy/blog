@@ -6,9 +6,9 @@
         <div class="d-flex">
             <h4>{{ __('Kullanıcı Düzenle') }}</h4>
         </div>
-        <div class="d-flex">
+        @can('view user')
             <a type="button" href="{{ route('panel.users.index') }}" class="btn btn-primary">{{ __('Tüm Kullanıcılar') }}</a>
-        </div>
+        @endcan
     </div>
     <div class="row">
         <div class="col-12">

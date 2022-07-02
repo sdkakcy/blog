@@ -1,5 +1,5 @@
 <option 
-    value="{{ $category->id }}" 
+    value="{{ $category->id }}"
     @if($post && $post->categories->contains('id', $category->id)) selected @endif
 >
     {{ Str::repeat('—', $level) }} {{ $category->name }}
@@ -9,6 +9,6 @@
     $level++;
 @endphp
 
-@foreach ($category->childrenRecursive as $child)
-    <x-category-select-option :category="$child" :level="$level" :post="$post" />
+@foreach ($category->children as $child)
+    <x-posts-category-select-option :category="$child" :level="$level" :post="$post" />
 @endforeach

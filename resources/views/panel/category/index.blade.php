@@ -7,7 +7,9 @@
             <h4>{{ __('Tüm Kategoriler') }}</h4>
         </div>
         <div class="d-flex">
-            <a type="button" href="{{ route('panel.categories.create') }}" class="btn btn-primary">{{ __('Yeni Ekle') }}</a>
+            @can('create category')
+                <a type="button" href="{{ route('panel.categories.create') }}" class="btn btn-primary">{{ __('Yeni Ekle') }}</a>
+            @endcan
         </div>
     </div>
     <div class="row">

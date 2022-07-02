@@ -7,7 +7,7 @@
             <h4>{{ __('Tüm Kullanıcılar') }}</h4>
         </div>
         <div class="d-flex">
-            @can('create post')
+            @can('create user')
                 <a type="button" href="{{ route('panel.users.create') }}" class="btn btn-primary">{{ __('Yeni Ekle') }}</a>
             @endcan
         </div>
@@ -38,11 +38,15 @@
                                 <td>{{ $user->created_at }}</td>
                                 <td>{{ $user->updated_at }}</td>
                                 <td class="text-end">
-                                    @can('update post')
-                                        <a href="{{ route('panel.users.edit', ['user' => $user->id]) }}" type="button" class="btn btn-sm btn-primary">Düzenle</a>
+                                    @can('update user')
+                                        <a href="{{ route('panel.users.edit', ['user' => $user->id]) }}" type="button" class="btn btn-sm btn-primary">{{ __('Düzenle') }}</a>
                                     @endcan
-                                    @can('delete post')
-                                        <button type="button" class="btn btn-sm btn-danger">Sil</button>
+                                    @can('delete user')
+                                    <form class="d-inline-flex" action="{{ route('panel.users.destroy', $user->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-danger" type="submit">{{ __('Sil') }}</button>
+                                    </form>
                                     @endcan
                                 </td>
                             </tr>

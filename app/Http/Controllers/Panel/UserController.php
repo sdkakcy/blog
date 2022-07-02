@@ -157,11 +157,30 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
+        abort_if(auth()->user()->id === $user->id, 403);
         abort_if(!auth()->user()->can('delete user'), 403);
+
+        try {
+            $user->delete();
+
+            return redirect()->back()->with([
+                'status' => [
+                    'success' => true,
+                    'message' => __('Kullanıcı silindi')
+                ]
+            ]);
+        } catch (\Exception $e) {
+            $result = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
+
+            return redirect()->back()->with(['status' => $result])->withInput();
+        }
     }
 }

@@ -16,6 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        abort_if(!auth()->user()->can('view category'), 403);
+
         $categories = Category::getTree();
 
         return view('panel.category.index', compact('categories'));
@@ -28,6 +30,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        abort_if(!auth()->user()->can('create category'), 403);
+
         $categories = Category::getTree();
 
         return view('panel.category.create', compact('categories'));
@@ -41,6 +45,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(!auth()->user()->can('create category'), 403);
+
         $request->validate([
             'name' => 'required|string',
             'parent_id' => 'nullable|integer'
@@ -89,6 +95,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        abort_if(!auth()->user()->can('update category'), 403);
+
         $categories = Category::getTree()->where('id', '!=', $category->id);
 
         return view('panel.category.edit', compact('category', 'categories'));
@@ -103,6 +111,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        abort_if(!auth()->user()->can('update category'), 403);
+
         $request->validate([
             'name' => 'required|string',
             'parent_id' => 'nullable|integer'
@@ -134,11 +144,29 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        abort_if(!auth()->user()->can('delete category'), 403);
+
+        try {
+            $category->delete();
+
+            return redirect()->back()->with([
+                'status' => [
+                    'success' => true,
+                    'message' => __('Kategori silindi')
+                ]
+            ]);
+        } catch (\Exception $e) {
+            $result = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
+
+            return redirect()->back()->with(['status' => $result])->withInput();
+        }
     }
 }

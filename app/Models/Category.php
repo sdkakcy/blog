@@ -9,6 +9,8 @@ class Category extends Model
 {
     use HasFactory;
 
+    public $descendants;
+
     /**
      * The attributes that should be cast.
      *
@@ -26,17 +28,41 @@ class Category extends Model
         return $this->belongsTo(self::class, 'parent_id');
     }
 
-    public function childrens()
+    public function subcategories()
     {
         return $this->hasMany(self::class, 'parent_id');
     }
 
-    public function childrenRecursive()
+    public function children()
     {
-        return $this->childrens()->with('childrenRecursive');
+        return $this->subcategories()->with('children');
     }
 
-    public static function getTree() {
-        return self::with('childrenRecursive')->whereNull('parent_id')->get();
+    public function hasChildren()
+    {
+        return $this->children->count() ? true : false;
+    }
+
+    public function findDescendants(Category $category)
+    {
+        $this->descendants[] = $category->id;
+
+        if ($category->hasChildren()) {
+            foreach ($category->children as $child) {
+                $this->findDescendants($child);
+            }
+        }
+    }
+
+    public function getDescendants(Category $category)
+    {
+        $this->findDescendants($category);
+
+        return $this->descendants;
+    }
+
+    public static function getTree()
+    {
+        return self::with('children')->whereNull('parent_id')->get();
     }
 }

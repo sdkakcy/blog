@@ -7,7 +7,9 @@
             <h4>{{ __('Yazı Düzenle') }}</h4>
         </div>
         <div class="d-flex">
-            <a type="button" href="{{ route('panel.posts.index') }}" class="btn btn-primary">{{ __('Tüm Yazılar') }}</a>
+            @can('view post')
+                <a type="button" href="{{ route('panel.posts.index') }}" class="btn btn-primary">{{ __('Tüm Yazılar') }}</a>
+            @endcan
         </div>
     </div>
     <div class="row">

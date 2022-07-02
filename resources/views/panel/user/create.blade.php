@@ -7,7 +7,9 @@
             <h4>{{ __('Yeni Kullanıcı Ekle') }}</h4>
         </div>
         <div class="d-flex">
-            <a type="button" href="{{ route('panel.users.index') }}" class="btn btn-primary">{{ __('Tüm Kullanıcılar') }}</a>
+            @can('view user')
+                <a type="button" href="{{ route('panel.users.index') }}" class="btn btn-primary">{{ __('Tüm Kullanıcılar') }}</a>
+            @endcan
         </div>
     </div>
     <div class="row">

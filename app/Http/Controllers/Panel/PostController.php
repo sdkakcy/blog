@@ -17,6 +17,8 @@ class PostController extends Controller
      */
     public function index()
     {
+        abort_if(!auth()->user()->can('view post'), 403);
+
         $posts = Post::with(['user'])->get();
 
         return view('panel.post.index', compact('posts'));
@@ -29,6 +31,8 @@ class PostController extends Controller
      */
     public function create()
     {
+        abort_if(!auth()->user()->can('create post'), 403);
+
         $categories = Category::getTree();
         
         return view('panel.post.create', compact('categories'));
@@ -42,6 +46,8 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(!auth()->user()->can('create post'), 403);
+
         $request->validate([
             'subject' => 'required|string',
             'category' => 'required|array|min:1',
@@ -58,7 +64,7 @@ class PostController extends Controller
 
             $post->save();
 
-            $post->categories()->sync($request->category);
+            $post->categories()->attach($request->category);
 
             return redirect()->route('panel.posts.index')->with([
                 'status' => [
@@ -95,6 +101,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        abort_if(!auth()->user()->can('update post'), 403);
+
         $categories = Category::getTree();
 
         $post->loadMissing('categories');
@@ -111,12 +119,13 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        abort_if(!auth()->user()->can('update post'), 403);
+
         $request->validate([
             'subject' => 'required|string',
             'category' => 'required|array|min:1',
             'content' => 'nullable|string',
         ]);
-
 
         try {
             $post->subject = $request->subject;
@@ -146,11 +155,29 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        abort_if(!auth()->user()->can('delete post'), 403);
+
+        try {
+            $post->delete();
+
+            return redirect()->back()->with([
+                'status' => [
+                    'success' => true,
+                    'message' => __('Yazı silindi')
+                ]
+            ]);
+        } catch (\Exception $e) {
+            $result = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
+
+            return redirect()->back()->with(['status' => $result])->withInput();
+        }
     }
 }
