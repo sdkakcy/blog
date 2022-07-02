@@ -18,3 +18,10 @@ Bu proje laravel 8, ile geliştirilmiş, development ortamı laravel/sail ile do
 * ***npm i***
 * ***npm run dev***
 * ***php artisan migrate --seed***
+
+***
+## Giriş
+* http://localhost/login
+
+* E-posta: admin@admin.com
+* Şifre: admin
