@@ -4,7 +4,7 @@
 <div class="container">
     <div class="d-flex justify-content-between mb-3">
         <div class="d-flex">
-            <h4>{{ __('Yeni Kategori Ekle') }}</h4>
+            <h4>{{ __('Kategori Düzenle') }}</h4>
         </div>
         <div class="d-flex">
             <a type="button" href="{{ route('panel.categories.index') }}" class="btn btn-primary">{{ __('Tüm Kategoriler') }}</a>
@@ -18,11 +18,12 @@
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
             
-            <form action="{{ route('panel.categories.store') }}" method="post">
+            <form action="{{ route('panel.categories.update', ['category' => $category->id]) }}" method="post">
                 @csrf
+                @method('put')
                 <div class="form-group mb-3">
                     <label for="name">{{ __('Adı') }}</label>
-                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="{{ __('Adı') }}" autofocus>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ $category->name }}" placeholder="{{ __('Adı') }}" autofocus>
                     
                     @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -35,8 +36,8 @@
                     <label for="parent_id">{{ __('Ebeveyn') }}</label>
                     <select class="form-control @error('parent_id') is-invalid @enderror" id="parent_id" name="parent_id">
                         <option value="">{{ __('Yok') }}</option>
-                        @foreach ($categories as $category)
-                            <x-category-select-option :category="$category" :level="0" />
+                        @foreach ($categories as $item)
+                            <x-category-select-option :category="$item" :level="0" :categoryModel="$category" />
                         @endforeach
                     </select>
 

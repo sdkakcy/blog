@@ -37,7 +37,7 @@
                     <select multiple class="form-control @error('category') is-invalid @enderror" id="category" name="category[]">
                         <option value="">{{ __('Seçiniz') }}</option>
                         @foreach ($categories as $category)
-                            <x-category-select-option :category="$category" :level="0" :post="$post" />
+                            <x-posts-category-select-option :category="$category" :level="0" :post="$post" />
                         @endforeach
                     </select>
 

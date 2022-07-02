@@ -4,26 +4,25 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class CategorySelectOption extends Component
+class PostsCategorySelectOption extends Component
 {
     public $category;
 
     public $level;
 
-    public $categoryModel;
+    public $post;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($category, $level, $categoryModel = null)
+    public function __construct($category, $level, $post = null)
     {
         $this->category = $category;
         $this->level = $level;
-        $this->categoryModel = $categoryModel;
+        $this->post = $post;
     }
-
     /**
      * Get the view / contents that represent the component.
      *
@@ -31,6 +30,6 @@ class CategorySelectOption extends Component
      */
     public function render()
     {
-        return view('components.category-select-option');
+        return view('components.posts-category-select-option');
     }
 }

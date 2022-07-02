@@ -84,24 +84,51 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        $categories = Category::getTree()->where('id', '!=', $category->id);
+
+        return view('panel.category.edit', compact('category', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'parent_id' => 'nullable|integer'
+        ]);
+
+        try {
+            $category->name = $request->name;
+            $category->slug = Str::slug($request->name);
+            $category->parent_id = $request->parent_id;
+
+            $category->update();
+
+            return redirect()->back()->with([
+                'status' => [
+                    'success' => true,
+                    'message' => __('Kategori güncellendi')
+                ]
+            ]);
+        } catch (\Exception $e) {
+            $result = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
+
+            return redirect()->back()->with(['status' => $result])->withInput();
+        }
     }
 
     /**
