@@ -74,7 +74,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    @if (Route::is('panel.index'))
+                                    @if (Route::is('panel.*'))
                                         <a class="dropdown-item" href="{{ route('index') }}">
                                             {{ __('Siteyi görüntüle') }}
                                         </a>
