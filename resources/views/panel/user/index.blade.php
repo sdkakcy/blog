@@ -26,7 +26,7 @@
                             <th>{{ __('E-posta') }}</th>
                             <th>{{ __('Oluşturma') }}</th>
                             <th>{{ __('Güncelleme') }}</th>
-                            <th>{{ __('İşlemler') }}</th>
+                            <th class="text-end">{{ __('İşlemler') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,7 +37,7 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->created_at }}</td>
                                 <td>{{ $user->updated_at }}</td>
-                                <td>
+                                <td class="text-end">
                                     @can('update post')
                                         <a href="{{ route('panel.users.edit', ['user' => $user->id]) }}" type="button" class="btn btn-sm btn-primary">Düzenle</a>
                                     @endcan

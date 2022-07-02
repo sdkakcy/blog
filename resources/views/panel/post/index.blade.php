@@ -21,7 +21,7 @@
                             <th>{{ __('Oluşturan') }}</th>
                             <th>{{ __('Oluşturma') }}</th>
                             <th>{{ __('Güncelleme') }}</th>
-                            <th>{{ __('İşlemler') }}</th>
+                            <th class="text-end">{{ __('İşlemler') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,7 +32,7 @@
                                 <td>{{ $post->user->name }}</td>
                                 <td>{{ $post->created_at }}</td>
                                 <td>{{ $post->updated_at }}</td>
-                                <td>
+                                <td class="text-end">
                                     <button type="button" class="btn btn-sm btn-primary">Düzenle</button>
                                     <button type="button" class="btn btn-sm btn-danger">Sil</button>
                                 </td>

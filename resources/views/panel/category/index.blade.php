@@ -23,7 +23,7 @@
                             <th>{{ __('Adı') }}</th>
                             <th>{{ __('Oluşturma') }}</th>
                             <th>{{ __('Güncelleme') }}</th>
-                            <th>{{ __('İşlemler') }}</th>
+                            <th class="text-end">{{ __('İşlemler') }}</th>
                         </tr>
                     </thead>
                     <tbody>
