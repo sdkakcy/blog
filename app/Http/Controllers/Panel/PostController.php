@@ -29,7 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::with('childrenRecursive')->whereNull('parent_id')->get();
+        $categories = Category::getTree();
         
         return view('panel.post.create', compact('categories'));
     }

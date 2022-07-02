@@ -15,10 +15,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::orderByDesc('created_at')->get();
 
-        $categories = Category::with('childrenRecursive')->whereNull('parent_id')->get();
+        $categories = Category::getTree();
 
-        return view('home', compact('posts', 'categories'));
+        return view('home.index', compact('posts', 'categories'));
     }
 }

@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::with('childrenRecursive')->whereNull('parent_id')->orderByDesc('id')->get();
+        $categories = Category::getTree();
 
         return view('panel.category.index', compact('categories'));
     }
@@ -28,7 +28,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::with('childrenRecursive')->whereNull('parent_id')->get();
+        $categories = Category::getTree();
 
         return view('panel.category.create', compact('categories'));
     }

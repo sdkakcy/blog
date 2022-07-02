@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -46,7 +47,12 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $posts = Post::whereRelation('categories', 'categories.id', $category->id)
+            ->orWhereRelation('categories.childrenRecursive', 'categories.parent_id', $category->id)
+            ->orderByDesc('created_at')
+            ->get();
+
+        return view('home.category', compact('category', 'posts'));
     }
 
     /**
