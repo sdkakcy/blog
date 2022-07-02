@@ -162,8 +162,16 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        abort_if(auth()->user()->id === $user->id, 403);
         abort_if(!auth()->user()->can('delete user'), 403);
+
+        if (auth()->user()->id === $user->id) {
+            return redirect()->back()->with([
+                'status' => [
+                    'success' => false,
+                    'message' => __('Kendinizi silemezsiniz')
+                ]
+            ]);
+        }
 
         try {
             $user->delete();

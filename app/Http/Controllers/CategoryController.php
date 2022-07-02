@@ -52,7 +52,7 @@ class CategoryController extends Controller
         $posts = Post::whereRelation('categories', function ($query) use (&$category_ids) {
             $query->whereIn('categories.id', $category_ids);
         })
-        ->with('user')
+        ->with('user', 'categories')
         ->orderByDesc('created_at')
         ->get();
 

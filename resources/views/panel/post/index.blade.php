@@ -4,7 +4,7 @@
 <div class="container">
     <div class="d-flex justify-content-between mb-3">
         <div class="d-flex">
-            <h4>{{ __('Tüm yazılar') }}</h4>
+            <h4>{{ __('Tüm Yazılar') }}</h4>
         </div>
         <div class="d-flex">
             @can('create post')
