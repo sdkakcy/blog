@@ -47,7 +47,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $posts = Post::whereRelation('categories', 'categories.id', $category->id)
+        $posts = Post::with('user')
+            ->whereRelation('categories', 'categories.id', $category->id)
             ->orWhereRelation('categories.childrenRecursive', 'categories.parent_id', $category->id)
             ->orderByDesc('created_at')
             ->get();

@@ -15,10 +15,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderByDesc('created_at')->get();
+        $posts = Post::with('user')->orderByDesc('created_at')->get();
 
-        $categories = Category::getTree();
-
-        return view('home.index', compact('posts', 'categories'));
+        return view('home.index', compact('posts'));
     }
 }
