@@ -14,9 +14,22 @@
                 <span class="font-weight-bold">{{ $post->user->name }}</span>,
                 <span class="text-muted">{{ formatDatetime($post->created_at) }}</span>
             </p>
-            <a href="{{ route('post', ['post' => $post->slug]) }}" class="btn btn-primary">{{ __('Devamını oku') }}</a>
+            <a href="{{ route('post', ['post' => $post->slug]) }}" class="btn btn-sm btn-primary">{{ __('Devamını oku') }}</a>
         </div>
     </div>
 @empty
     {{ __('Üzgünüz, hiçbir içerik bulunmuyor') }}
 @endforelse
+
+<div class="d-flex justify-content-between">
+    <div>
+        @if (!$posts->onFirstPage())
+            <a href="{{ $posts->previousPageUrl() }}" class="btn btn-sm btn-outline-primary">{{ __('Önceki Sayfa') }}</a>
+        @endif
+    </div>
+    <div>
+        @if ($posts->hasMorePages())
+            <a href="{{ $posts->nextPageUrl() }}" class="btn btn-sm btn-outline-primary">{{ __('Sonraki Sayfa') }}</a>
+        @endif
+    </div>
+</div>

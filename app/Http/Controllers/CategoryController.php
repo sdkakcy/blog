@@ -54,7 +54,7 @@ class CategoryController extends Controller
         })
         ->with('user', 'categories')
         ->orderByDesc('created_at')
-        ->get();
+        ->simplePaginate();
 
         return view('home.category', compact('category', 'posts'));
     }

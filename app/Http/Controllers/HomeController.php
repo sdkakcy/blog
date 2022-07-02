@@ -17,7 +17,7 @@ class HomeController extends Controller
     {
         $posts = Post::with('user', 'categories')
             ->orderByDesc('created_at')
-            ->get();
+            ->simplePaginate();
 
         return view('home.index', compact('posts'));
     }

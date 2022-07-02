@@ -36,7 +36,6 @@
                 <div class="form-group mb-3">
                     <label for="category">{{ __('Kategori') }}</label>
                     <select multiple class="form-control @error('category') is-invalid @enderror" id="category" name="category[]">
-                        <option value="">{{ __('Seçiniz') }}</option>
                         @foreach ($categories as $category)
                             <x-posts-category-select-option :category="$category" :level="0" />
                         @endforeach
